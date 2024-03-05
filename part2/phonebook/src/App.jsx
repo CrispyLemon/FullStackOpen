@@ -60,14 +60,20 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
+      
     };
 
     const existingPerson = persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase());
 
     if (!existingPerson) {
-      setPersons(persons.concat(newPerson));
-      setNewName('');
-      setNewNumber('');
+    axios
+      .post("http://localhost:3001/persons", newPerson)
+      .then(response => {
+        setPersons(persons.concat(newPerson));
+        setNewName('');
+        setNewNumber('');  
+      })
+
     } else {
       window.alert(`${newName} exists in the phonebook`);
     }

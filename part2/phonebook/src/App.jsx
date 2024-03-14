@@ -1,5 +1,8 @@
+//TODO: Fix function import
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import {func1, func2} from "./services/phonebook"
 
 const Persons = ({ filteredPersons }) => {
   return (
@@ -48,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/persons")
+    .func1()
       .then((response) => {
         console.log("promise fulfilled")
         setPersons(response.data)
@@ -67,7 +70,7 @@ const App = () => {
 
     if (!existingPerson) {
     axios
-      .post("http://localhost:3001/persons", newPerson)
+      .func2(newPerson)
       .then(response => {
         setPersons(persons.concat(newPerson));
         setNewName('');

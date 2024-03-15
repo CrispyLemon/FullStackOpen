@@ -1,9 +1,5 @@
-//TODO: Fix function import
-
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import {func1, func2} from "./services/phonebook"
-
+import phoneService from './services/phonebook'
 const Persons = ({ filteredPersons }) => {
   return (
     <>
@@ -50,8 +46,8 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios
-    .func1()
+    phoneService
+      .getAll()
       .then((response) => {
         console.log("promise fulfilled")
         setPersons(response.data)
@@ -69,8 +65,8 @@ const App = () => {
     const existingPerson = persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase());
 
     if (!existingPerson) {
-    axios
-      .func2(newPerson)
+    phoneService
+      .change(newPerson)
       .then(response => {
         setPersons(persons.concat(newPerson));
         setNewName('');

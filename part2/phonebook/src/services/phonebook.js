@@ -10,7 +10,7 @@ const change = newObject =>{
 };
 
 export default {
-    func1: getAll,
-    func2: change,
+    getAll: getAll,
+    change: change,
 };
 

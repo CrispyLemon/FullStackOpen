@@ -9,8 +9,9 @@ const change = newObject =>{
     return axios.post(BaseUrl, newObject);
 };
 
-export default {
-    getAll: getAll,
-    change: change,
-};
+const del = object => {
+    return axios.delete('http://localhost:3001/persons', object);
+}
+
+export default { getAll, change, del };
 

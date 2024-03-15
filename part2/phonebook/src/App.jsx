@@ -1,15 +1,34 @@
+//TODO: Fix delete
+
 import { useState, useEffect } from 'react'
 import phoneService from './services/phonebook'
-const Persons = ({ filteredPersons }) => {
+const Persons = ({ filteredPersons, setPersons }) => {
   return (
     <>
       {filteredPersons.map((person) => (
         <div key={person.name}>
-          {person.name} {person.number}
-        </div>
+          <Delete person = {person} setPersons={setPersons} /> 
+        </div> 
       ))}
     </>
   )
+}
+
+const Delete = ({ person, setPersons }) => {
+  const delPerson = (event) => {
+    event.preventDefault();
+    phoneService
+      .del(person.id)
+      .then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id))
+      });
+  }
+  return(
+    <div>
+      {person.name} {person.number}
+      <button onClick={delPerson}>delete</button>
+    </div>
+  ) 
 }
 
 const Filter = ({ searchTerm, handleSearchChange }) => {
@@ -100,7 +119,7 @@ const App = () => {
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <Filter searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
       <h2>Numbers</h2>
-      <Persons filteredPersons={filteredPersons} />
+      <Persons setPersons={setPersons} filteredPersons={filteredPersons} />
     </div>
   );
 };

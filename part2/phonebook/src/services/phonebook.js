@@ -9,9 +9,21 @@ const change = newObject =>{
     return axios.post(BaseUrl, newObject);
 };
 
-const del = object => {
-    return axios.delete('http://localhost:3001/persons', object);
+
+const remove = (id) => {
+    const request = axios.delete(`${BaseUrl}/${id}`)
+    return request.then(response => response.data)
 }
 
-export default { getAll, change, del };
+const update = (id, updatedPerson) => {
+    const request = axios.put(`${BaseUrl}/${id}`, updatedPerson);
+    return request.then(response => response.data);
+  }
+
+export default {
+    func1: getAll,
+    func2: change,
+    remove: remove,
+    update
+};
 

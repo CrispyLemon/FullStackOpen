@@ -72,13 +72,14 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-
+  console.log("init")
   useEffect(() => {
     phoneService
       .func1()
       .then((response) => {
         console.log("promise fulfilled")
         setPersons(response.data)
+        console.log(persons)
       })
   }, [])
 

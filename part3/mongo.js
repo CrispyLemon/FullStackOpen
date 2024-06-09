@@ -45,7 +45,7 @@ const person = new Person({
 });
 
 person.save().then(result => {
-    console.log('note saved!')
+    console.log('person saved!')
     mongoose.connection.close()
   })
 }

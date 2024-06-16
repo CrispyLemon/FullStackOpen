@@ -5,7 +5,7 @@ const getAll = () => {
     return axios.get(BaseUrl);
 };
 
-const change = newObject =>{
+const create = newObject =>{
     return axios.post(BaseUrl, newObject);
 };
 
@@ -22,7 +22,7 @@ const update = (id, updatedPerson) => {
 
 export default {
     func1: getAll,
-    func2: change,
+    func2: create,
     remove: remove,
     update
 };

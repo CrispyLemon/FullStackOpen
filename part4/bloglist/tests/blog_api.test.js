@@ -12,13 +12,9 @@ const blogs = helper.blogs
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    console.log('cleared')
-    let blogObject = new Blog(blogs[0])
-    await blogObject.save()
-    blogObject = new Blog(blogs[1])
-    await blogObject.save()
-    console.log('saved')
-
+    const blogObjects = blogs.map(blog => new Blog(blog))
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
 })
 
 
@@ -34,7 +30,7 @@ describe("get requests", () => {
 
     test("all blogs are returned", async () => {
         const response = await api.get('/api/blogs')
-        assert.strictEqual(response.body.length, 2)
+        assert.strictEqual(response.body.length, blogs.length)
     })
 
     test("a specific blog is within the returned blogs", async () => {
@@ -68,7 +64,7 @@ describe("post requests", () => {
             .expect(201)
             .expect('Content-Type', /application\/json/)
         const blogsAtEnd = await helper.blogsInDb()
-        assert.strictEqual(blogsAtEnd.length, 3)
+        assert.strictEqual(blogsAtEnd.length, helper.blogs.length + 1)
         const contents = blogsAtEnd.map(r => r.title)
         assert(contents.includes('new blog'))
     })
